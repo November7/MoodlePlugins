@@ -1,0 +1,295 @@
+<?php
+/*
+	var 0.1		[2014.12.10]
+		Start
+	ver 0.8 	[2015.01.23]
+		main functions
+	ver 0.9 	[2015.01.24]
+		Stable engine
+	ver 0.9.1 	[2015.01.25]
+		fixed: 
+			parsing empty strings
+			selecting code without line numbers
+			mulitiline span
+	ver 0.9.2	[2015.04.02]
+		fixed:	performance
+	ver 0.9.3	[2015.04.12]
+		add variable pattern
+	ver 1.0		[2015.04.12]
+		&lt; &gt; &amp;
+
+	bugs:
+	- char encoding
+	- inline comment (C++)
+*/
+
+class CodeHL
+{
+	var $lang_data = array();
+	var $clearCode ="";
+	var $parsedCode="";
+	var $lang="";
+	var $numLines = true;
+	var $startLine = 1;
+	var $style = "normal";
+	var $codeHeader = "Sample code";
+	var $timestamps = array();
+	var $ver = "1.1.2";
+
+	function timestamp($name="noname")
+	{
+		list($usec, $sec) = explode(' ', microtime()); 
+
+		array_push($this->timestamps,array($name,(float)$usec + (float)$sec)); 
+	}
+
+	function showtimestamps($all=true)
+	{
+		$i=0;		
+		$last=0;
+		$first=0;
+		$buff = "";
+		$details = "";
+		if($all)
+		{
+			foreach($this->timestamps as $row)
+			{				
+				if($i) $details .= sprintf("%s <span style='color:#a00'>%6.5f</span> ms", $row[0],1000*($row[1]-$last));
+				else {$first = $row[1]; $details .= sprintf("<br>Start at <span style='color:#a00'> %s</span>",date("H:i:s", $row[1]));}
+				$last = $row[1];
+				$details .= "<br>";
+				$i++;
+			}
+		}
+		$buff .= sprintf("Parsed in: %4.3f ms",1000*($last-$first));
+		return $buff.$details;
+	}
+
+	function CodeHL($lang ='', $clearCode = '', $codeHeader = '') 	
+	{
+		if (!empty($lang)) 
+		{
+			$this->lang = $lang;
+			$this->loadLanguage($lang);
+		} 
+		if (!empty($clearCode)) $this->clearCode = $clearCode;
+		if (!empty($codeHeader)) $this->codeHeader = $codeHeader;
+    }
+
+	function loadLanguage($lang)
+	{
+		require("langs/{$lang}.php");
+		$this->lang_data = $lang_data;			
+	}
+	
+	function getLanguageName()
+	{
+		return $this->lang_data['LANGNAME'];
+	}	
+
+	function array_match($pattern,$subject)
+	{
+		foreach($subject as $item)
+		{
+			if(strpos($pattern,$item)!==false) return true;
+		}
+		return false;
+	}
+	
+	function commentText(&$formatted,&$splitted)
+	{		
+		$escapechars 	= "\\/*()";
+		$pattern 		= array();
+		$class 			= array();
+		$regpart 		= array();
+
+		
+		
+		foreach($this->lang_data['MULTICOMMENT'] as $b => $e)
+		{
+			array_push($pattern,addcslashes($b,$escapechars).'.*?'.addcslashes($e,$escapechars));
+			array_push($class,'<span class=\'multicomment\'>$0</span>');
+		}
+
+		foreach($this->lang_data['COMMENT'] as $b => $e)
+		{
+			$reg = addcslashes($b,$escapechars).'[[:print:]]*';			
+			array_push($pattern,$reg);
+			array_push($class,'<span class=\'comment\'>$0</span>');
+		}
+
+		foreach($this->lang_data['TEXT'] as $b => $e)
+		{
+			array_push($pattern,$b.$e);
+			array_push($class,'<span class=\'text\'>$0</span>');
+			$reg = addcslashes($b,$escapechars).'.*?';
+			if(isset($this->lang_data['ESCAPECHAR'])) $reg .= '[^'.addcslashes($this->lang_data['ESCAPECHAR'],$escapechars).']';
+			$reg .= $e;
+			array_push($pattern,$reg);
+			array_push($class,'<span class=\'text\'>$0</span>');
+
+		}
+		
+		array_push($pattern,$this->lang_data['VARIABLEPATTERN']);
+		array_push($class,'');
+		
+		array_push($pattern,'0{1}[0-7]{1,}');
+		array_push($class,'<span class=\'oct-number\'>$0</span>');
+		array_push($pattern,'0[xX][\da-fA-F]{1,}');
+		array_push($class,'<span class=\'hex-number\'>$0</span>');
+		$tmpVar = '[+-]{0,1}[\d]{0,}\\'.$this->lang_data['DECIMALMARK'].'[\d]{1,}';
+		if(isset($this->lang_data['REALXT'])) $tmpVar .= '['.$this->lang_data['REALXT'].']{0,1}';
+		array_push($pattern,$tmpVar);		
+		array_push($class,'<span class=\'double-number\'>$0</span>');
+		$tmpVar = '[+-]{0,1}[\d]{1,}';
+		if(isset($this->lang_data['INTXT'])) $tmpVar .= '['.$this->lang_data['INTXT'].']{0,1}';
+		array_push($pattern,$tmpVar);
+		array_push($class,'<span class=\'dec-number\'>$0</span>');
+		/**/
+
+		array_push($pattern,'\\r\\n|\\r|\\n');
+		array_push($class,'$0');
+		
+		$splitted = preg_split('/('.implode(')|(',$pattern).')/s', $this->clearCode, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+	
+		foreach($pattern as $p) 
+		{
+			if(substr($p,-1) != '$') array_push($regpart,'/^'.$p.'$/s');
+			else array_push($regpart,'/^'.$p.'/s');
+		}
+
+
+		$formatted = preg_filter($regpart,$class,$splitted);
+
+		foreach($formatted as $k => $v) 
+			if($formatted[$k]!='') unset($splitted[$k]);
+			else unset($formatted[$k]);
+	}
+
+	function datatypesKeywords(&$formatted,&$splitted)
+	{
+		foreach($splitted as $k=>$fraq)
+		{
+			$ret = array($fraq);
+			//array_push($this->lang_data['DELIMITERS'], ' ');  //space ?????????????????
+			foreach ($this->lang_data['DELIMITERS'] as $splitter)
+			{
+				$splitrow = array();
+				foreach ($ret as $row)
+				{
+					$spli = array();
+					foreach(preg_split("/\\".$splitter."/",$row) as $r)
+					{
+						array_push($spli,$r);
+						array_push($spli,$splitter); 
+					}
+					array_pop($spli);
+
+					foreach($spli as $s) array_push($splitrow,$s);
+					//$splitrow = array_merge($splitrow,$spli);
+				}
+				$ret = $splitrow;
+			}
+			foreach($ret as $key=>&$item)
+			{
+				$parsed[$key] = $item;
+				if($this->array_match($item,$this->lang_data['DELIMITERS']))
+				{					
+					$parsed[$key] = "<span class='delimiters'>{$item}</span>";							
+				}
+				else
+				{
+					foreach($this->lang_data['KEYWORDS'] as $group => $keyword)
+					{
+						if($this->array_match($item,$keyword))	
+						{
+							$parsed[$key] = "<span class='keyword{$group}'>{$item}</span>";
+						}	
+					}
+				}
+				$item = "";
+			}
+
+			$gotowe = implode($parsed);
+			if($gotowe != "")
+			{
+				$formatted[$k] = $gotowe;
+				unset($splitted[$k]);
+			}			
+			unset($parsed);
+		}
+	}
+
+	function parseHL()
+	{	
+		$this->timestamp("1");
+		$formatted = array();
+		$splitted = array();
+		
+		$this->commentText($formatted,$splitted);
+		$this->timestamp("CommentText");
+		$this->datatypesKeywords($formatted,$splitted);
+		$this->timestamp("DataTypesKeywords");
+	
+		ksort($formatted);		
+		$this->timestamp("Sortowanie");
+
+		$splitted = preg_split('/(\\r\\n|\\r|\\n)/', implode($formatted));
+		$this->timestamp("końce linii");
+/********** NOT SURE **********/
+
+		$next = array();
+		foreach($splitted as &$spli)
+		{
+			if(strlen($spli) >0 && substr($spli,5) != '<span' && isset($next['class'])) 
+			{
+				$spli = '<span class=\''.$next['class'].'\'>'.$spli; 
+				
+			}
+			if(strlen($spli) >0 && substr($spli,-7) != '</span>') 
+			{
+				unset($next);
+				preg_match('/<span class=\'(?P<class>.+?)\'>.*?$/', substr($spli,strrpos($spli,'<span')),$next);				
+				$spli .= "</span>";				
+			}
+			else unset($next);
+			
+		}
+		$this->timestamp("testowy frag");
+/*******************************/
+
+		$this->parsedCode = "<table class='{$this->style}'>";
+		//header
+		if(1) $this->parsedCode .= "<thead><tr><th colspan='2'><span class='title'>{$this->codeHeader}</span><span class='language'>{$this->lang_data['LANGNAME']}</span></th></tr></thead>";
+		//footer
+		if(1) 
+		{
+			$this->parsedCode .= "<tfoot><tr><td colspan=2><span class='parsed-time'>";
+			$this->parsedCode .= $this->showtimestamps(false);
+			$this->parsedCode .= "</span><span class='version'>CodeHL v{$this->ver}</span></td></tr></tfoot>";
+		}
+		$this->parsedCode .= "<tr>";
+		$lineNumbers = "";
+		$codeLines = "";
+
+		$nr = $this->startLine;
+		foreach($splitted as $s)
+		{
+
+			$lineNumbers .= "<pre>$nr</pre>";
+			$codeLines .= "<pre>".(strlen($s)>0?$s:" ")."</pre>";
+			$nr++;
+		}
+		//linenubers
+		if(1) $this->parsedCode .= "<td>$lineNumbers</td><td>";
+		else $this->parsedCode .= "<td colspan='2'>";
+		$this->parsedCode .= $codeLines."</td></tr>";
+		echo "</table>";
+	}
+
+	function showParsed()
+	{
+		echo $this->parsedCode;		
+	}
+};
+?>

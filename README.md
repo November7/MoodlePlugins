@@ -1,2 +1,3 @@
 # codeHL
-Code Highlighter, plugin form moodle (TinyMCE)
+TinyMCE plugin for Moodle 2.8+
+version 1.0
