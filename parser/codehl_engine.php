@@ -34,7 +34,7 @@ class CodeHL
 	var $style = "normal";
 	var $codeHeader = "Sample code";
 	var $timestamps = array();
-	var $ver = "1.1.2";
+	var $ver = "1.0";
 
 	function timestamp($name="noname")
 	{
@@ -54,14 +54,14 @@ class CodeHL
 		{
 			foreach($this->timestamps as $row)
 			{				
-				if($i) $details .= sprintf("%s <span style='color:#a00'>%6.5f</span> ms", $row[0],1000*($row[1]-$last));
+				if($i) $details .= sprintf("%s <span style='color:#a00'>%3.2f</span> ms", $row[0],1000*($row[1]-$last));
 				else {$first = $row[1]; $details .= sprintf("<br>Start at <span style='color:#a00'> %s</span>",date("H:i:s", $row[1]));}
 				$last = $row[1];
 				$details .= "<br>";
 				$i++;
 			}
 		}
-		$buff .= sprintf("Parsed in: %4.3f ms",1000*($last-$first));
+		$buff .= sprintf("Parsed in: %3.2f ms",1000*($last-$first));
 		return $buff.$details;
 	}
 
