@@ -26,9 +26,11 @@ $lang_data = array(
 			'typedef','sizeof',
 			'public','protected','private',
 			'try','throw','catch',
-			'return','true','false','null'),
+			'return','true','false','null',
+			'import','java','util'
+			),
 		2 => array(
-			'char','bool','int','float','double','void','enum',
+			'char','bool','int','float','double','void','enum','String',
 			'class','struct','union',			
 			'signed','unsigned','long','short',
 			'volatile','const','static','auto','register',
@@ -36,6 +38,7 @@ $lang_data = array(
 			'new'
 			),
 		3 => array(
+			'String','Scanner','System','in','out'
 			),
 		4 => array(
 			)
