@@ -16,11 +16,13 @@
 	ver 0.9.3	[2015.04.12]
 		add variable pattern
 	ver 1.0		[2015.04.12]
-		&lt; &gt; &amp;
-
+		&lt; &gt; &amp; 		<-- not fixed
+	ver 1.1		[2015.05.18]
+		enabled editing code
 	bugs:
 	- char encoding
 	- inline comment (C++)
+	- &lt; &gt; &amp;
 */
 
 class CodeHL
@@ -34,7 +36,7 @@ class CodeHL
 	var $style = "normal";
 	var $codeHeader = "Sample code";
 	var $timestamps = array();
-	var $ver = "1.0";
+	var $ver = "1.1";
 
 	function timestamp($name="noname")
 	{
@@ -268,7 +270,7 @@ class CodeHL
 			$this->parsedCode .= $this->showtimestamps(false);
 			$this->parsedCode .= "</span><span class='version'>CodeHL v{$this->ver}</span></td></tr></tfoot>";
 		}
-		$this->parsedCode .= "<tr>";
+		
 		$lineNumbers = "";
 		$codeLines = "";
 
@@ -281,8 +283,9 @@ class CodeHL
 			$nr++;
 		}
 		//linenubers
-		if(1) $this->parsedCode .= "<td>$lineNumbers</td><td>";
-		else $this->parsedCode .= "<td colspan='2'>";
+		$this->parsedCode .= "<tr>";
+		if($this->numLines == 'off') $this->parsedCode .= " <td style='width: 0px; border-right: 0px;'></td><td>";
+		else $this->parsedCode .= "<td>$lineNumbers</td><td>";		
 		$this->parsedCode .= $codeLines."</td></tr>";
 		echo "</table>";
 	}

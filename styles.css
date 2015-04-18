@@ -49,6 +49,7 @@ div.codehl pre
 div.codehl table
 {
 	border: 1px solid #317cc5;	
+	border-collapse: collapse;;
 }
 
 
@@ -56,9 +57,9 @@ div.codehl table td:nth-child(1) {width:1px;}
 
 /* normal */
 
-div.codehl table.normal td {margin: 0px; padding: 0px; border-left: 1px solid #317cc5;}
-div.codehl table.normal thead,tfoot {margin: 0px; padding: 0px; border: 1px solid #317cc5;}
+div.codehl table.normal td 					{margin: 0px; padding: 0px; border-right: 1px solid #317cc5;}
 
+div.codehl table.normal thead,tfoot 		{margin: 0px; padding: 0px; border: 1px solid #317cc5;}
 div.codehl table.normal td:nth-child(1)	pre {color: #317cc5 !important}
 
 div.codehl table.normal td:nth-child(1)	pre:nth-child(2n)		{background: #dfefff !important;}
@@ -66,19 +67,18 @@ div.codehl table.normal td:nth-child(1)	pre:nth-child(2n+1) 	{background: #c8e1f
 div.codehl table.normal td:nth-child(2)	pre:nth-child(2n)		{background: #ffffff !important;}
 div.codehl table.normal td:nth-child(2)	pre:nth-child(2n+1) 	{background: #f9f9f9 !important;}
 
-div.codehl table.normal span.keyword1 {color: #0000CC; font-weight: bold;}
-div.codehl table.normal span.keyword2 {color: #006600; font-weight: bold;}
-div.codehl table.normal span.keyword3 {color: #669900;}
-div.codehl table.normal span.keyword4 {color: #336600;}
-
-div.codehl table.normal span.oct-number {color: #0099CC;}
-div.codehl table.normal span.dec-number {color: #0099CC;}
-div.codehl table.normal span.hex-number {color: #0099CC;}
-div.codehl table.normal span.double-number {color: #0099CC;}
-div.codehl table.normal span.text {color: #990000;}
-div.codehl table.normal span.multicomment {color: #999966;}
-div.codehl table.normal span.comment {color: #999966;}
-div.codehl table.normal span.delimiter {color: #000000;}
+div.codehl table.normal span.keyword1 		{color: #0000CC; font-weight: bold;}
+div.codehl table.normal span.keyword2 		{color: #006600; font-weight: bold;}
+div.codehl table.normal span.keyword3 		{color: #669900;}
+div.codehl table.normal span.keyword4 		{color: #336600;}
+div.codehl table.normal span.oct-number 	{color: #0099CC;}
+div.codehl table.normal span.dec-number 	{color: #0099CC;}
+div.codehl table.normal span.hex-number 	{color: #0099CC;}
+div.codehl table.normal span.double-number 	{color: #0099CC;}
+div.codehl table.normal span.text 			{color: #990000;}
+div.codehl table.normal span.multicomment 	{color: #999966;}
+div.codehl table.normal span.comment 		{color: #999966;}
+div.codehl table.normal span.delimiter 		{color: #000000;}
 
 div.codehl table.normal thead
 {
@@ -93,7 +93,7 @@ div.codehl table.normal tfoot
 }
 
 /* dark */
-div.codehl table.dark td {margin: 0px; padding: 0px; border-left: 1px solid #666;}
+div.codehl table.dark td {margin: 0px; padding: 0px; border-right: 1px solid #666;}
 div.codehl table.dark thead,tfoot {margin: 0px; padding: 0px; border: 1px solid #666;}
 
 div.codehl table.dark td:nth-child(1)	pre {color: #bbb !important}

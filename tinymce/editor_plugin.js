@@ -26,7 +26,7 @@
 				tinyMCE.activeEditor.dom.loadCSS(ed.getParam('moodle_plugin_base')+'codehl/styles.css');
 			});
 
-			console.log(url);
+			//console.log(url);
 			ed.addButton('codehl', 	{title : 'codehl.desc', cmd : 'codehl_doModal', image : url + '/codehl.png'});
 		},
 		getInfo : function()

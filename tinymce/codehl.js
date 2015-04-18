@@ -2,6 +2,7 @@
 /*								CodeHL Moodle Plugin								 */
 /*																					 */
 /*							  Version: 1.0 [2015.04.14]								 */
+/*							  Version: 1.1 [2015.04.18]								 */
 /*************************************************************************************/
 
 
@@ -40,6 +41,7 @@ var numControl 			= null;
 var startNumberControl 	= null;
 var codehlWidth 		= null;
 var codehlWidthUnit 	= null;
+var themeControl		= null;
 var classPrefix 		= 'codehl_';
 
 /*************************************************************************************/
@@ -63,6 +65,48 @@ var codehlDialog =
 			strVar += 'selectedValue=' + 
 			encodeURIComponent((mainDiv.className.indexOf(classPrefix) == 0) ? 
 			mainDiv.className.substring(classPrefix.length) : mainDiv.className);
+
+			var nWidth = parseInt(mainDiv.style.width);
+			var strWidthUnit = 'pixels';
+			if(mainDiv.style.width.indexOf('%') != -1) strWidthUnit = 'percent';			
+			if(!isNaN(nWidth))
+			{
+				codehlWidth.value = nWidth.toString();
+				this.selectCombo(codehlWidthUnit,strWidthUnit);
+			}
+			var htmlTag;
+			if( (htmlTag = mainDiv.getElementsByTagName('tbody')) &&
+				(htmlTag = htmlTag[0].getElementsByTagName('td')) &&
+				isNaN(htmlTag[0].style.width))
+			{
+				 	this.selectCombo( numControl, 'off');
+			}
+			else	
+			{
+				this.selectCombo( numControl, 'on');
+				if(htmlTag = htmlTag[0].getElementsByTagName('pre'))
+				{
+					startNumberControl.value = parseInt(htmlTag[0].innerHTML);
+				}				
+			}
+			if( (htmlTag = mainDiv.getElementsByTagName('thead')) &&
+				(htmlTag = htmlTag[0].getElementsByTagName('span')) &&
+				(htmlTag[0].className == 'title'))
+					headerControl.value = htmlTag[0].innerHTML;
+			if( (htmlTag = mainDiv.getElementsByTagName('tbody')) &&
+				(htmlTag = htmlTag[0].getElementsByTagName('td')) &&
+				(htmlTag = htmlTag[1].getElementsByTagName('pre')))
+			{
+				textareaControl.value = "";
+				var strLine="";
+				for(var i=0;i<htmlTag.length;i++)
+				{
+					//console.log(htmlTag[i].innerHTML);
+					if(i) textareaControl.value+="\n";
+					strLine = htmlTag[i].innerHTML.replace(/\<[^\>]*\>/gi, "");
+					textareaControl.value += strLine;
+				}
+			}
 		}
 
 		var xmlHttp = new XMLHttpRequest();
@@ -71,13 +115,13 @@ var codehlDialog =
 		xmlHttp.send(strVar);
 
 		if (xmlHttp.readyState == 4 && xmlHttp.status==200) languageControl.innerHTML = xmlHttp.responseText;
-		else console.log(alert("XMLHttpRequest Error: " + xmlHttp.statusText));
+		else console.log("XMLHttpRequest Error: " + xmlHttp.statusText);
 	},
 	
 	onInit : function()
 	{
 		var ed = tinyMCEPopup.editor;	
-		//tinyMCEPopup.resizeToInnerSize();
+		//tinyMCEPopup.resizeToInnerSize();		
 		
 		languageControl		= document.getElementById('languageControl');
 		headerControl		= document.getElementById('headerControl');
@@ -86,18 +130,23 @@ var codehlDialog =
 		startNumberControl	= document.getElementById('startNumberControl');
 		codehlWidth			= document.getElementById('codehlWidth');
 		codehlWidthUnit		= document.getElementById('codehlWidthUnit');
+		themeControl		= document.getElementById('themeControl');
 		
 		textareaControl.onkeydown = this.tabKey;
 
-		if( mainDiv == null )
+		if(!mainDiv)
 		{
 			mainDiv = ed.dom.getParent(	ed.selection.getNode(),
 										function(n) 
 										{
-											return n.parentNode && 
-											n.parentNode.tagName == "div" &&
-											n.parentNode.className == "codehl"; 
-										});
+											if( n.parentNode && 
+												n.parentNode.tagName &&
+												n.parentNode.tagName == "DIV" &&
+												n.parentNode.className == "codehl") 
+												 return true; 
+											else return false;											
+										});			
+
 		}
 		this.onInitDialog();		
 		this.resizeTextarea();
@@ -167,6 +216,18 @@ var codehlDialog =
 		if( textareaControl ) textareaControl.style.height = Math.abs(contentHeight) + 'px';
 	},
 
+	selectCombo : function(combo, value)
+	{
+		for( var i = 0; i < combo.options.length; i++ )
+		{
+			if(	combo.options[i].value == value )
+			{
+				combo.selectedIndex = i;
+				break;
+			}
+		}
+	},
+
 	insertCode : function()
 	{
 		var langOptionTag 	= document.getElementById('langOption');
@@ -205,11 +266,10 @@ var codehlDialog =
 					rng.collapse(false);
 				}
 				var htmlContent ="";
-				htmlContent += "<!-- CodeHL Begin -->";
 				htmlContent += "<div class='codehl'><div class='"+classPrefix+languageVal+"' ";
 				htmlContent += "style='width: "+divWidth+";'>"; 
 				htmlContent += xmlHttp.responseText;
-				htmlContent += "</div></div><!-- CodeHL End --><p></p><p></p>";
+				htmlContent += "</div></div>";
 				tinyMCEPopup.execCommand("mceInsertContent",false,htmlContent);
 				ed.addVisual(ed.getBody());
 			}
@@ -221,7 +281,7 @@ var codehlDialog =
 			}
 			ed.nodeChanged();
 		}
-		else console.log(alert("XMLHttpRequest Error: " + xmlHttp.statusText));
+		else console.log("XMLHttpRequest Error: " + xmlHttp.statusText);
 	}
 };
 

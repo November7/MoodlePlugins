@@ -15,6 +15,7 @@ $startNumberVal	= getPostVal('startNumberVal');
 $engine = new CodeHL($languageVal, $textareaVal);
 $engine->startLine 	= $startNumberVal;
 $engine->codeHeader = $headerVal;
+$engine->numLines = $numVal;
 
 $engine->parseHL();
 $engine->showParsed();
