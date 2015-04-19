@@ -4,18 +4,22 @@
 	keywords: max. 4 groups
 	delimiters: (including space!) and operators (one-char operator)
 
-	ver: 0.9 [2015.04.12]
+	ver: 0.9 	[2015.04.12]
+	ver: 0.9.1	[2015.04.18]
+	dot, space issue?
+	
 		 
 
 */
 
 $lang_data = array(
-	'VER' => '0.9', 
+	'VER' => '0.9.1', 
 	'LANGNAME' => 'Java',
 	'CASESENSITIVE' => array(
 		1 => true,
 		2 => true,
-		3 => true
+		3 => true,
+		4 => true
 		),
 	'KEYWORDS' => array(
 		1 => array(
@@ -30,7 +34,7 @@ $lang_data = array(
 			'import','java','util'
 			),
 		2 => array(
-			'char','bool','int','float','double','void','enum','String',
+			'char','bool','int','float','double','void','enum',
 			'class','struct','union',			
 			'signed','unsigned','long','short',
 			'volatile','const','static','auto','register',
