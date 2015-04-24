@@ -270,7 +270,9 @@ var codehlDialog =
 				htmlContent += "style='width: "+divWidth+";'>"; 
 				htmlContent += xmlHttp.responseText;
 				htmlContent += "</div></div>";
+				tinyMCEPopup.execCommand("mceInsertContent",false,"<p></p>");
 				tinyMCEPopup.execCommand("mceInsertContent",false,htmlContent);
+
 				ed.addVisual(ed.getBody());
 			}
 			else
@@ -279,6 +281,7 @@ var codehlDialog =
 				mainDiv.style.width 	= divWidth;
 				mainDiv.innerHTML		= xmlHttp.responseText;
 			}
+			
 			ed.nodeChanged();
 		}
 		else console.log("XMLHttpRequest Error: " + xmlHttp.statusText);
