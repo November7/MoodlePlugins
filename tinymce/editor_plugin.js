@@ -36,7 +36,7 @@
 				author : 'Marcin Kowalski',
 				authorurl : 'http://www.zsme.tarnow.pl',
 				infourl : 'http://www.zsme.tarnow.pl',
-				version : "1.1.2"
+				version : "1.3"
 			};
 		}
 	});

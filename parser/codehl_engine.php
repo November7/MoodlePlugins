@@ -19,10 +19,12 @@
 		&lt; &gt; &amp; 		<-- not fixed
 	ver 1.1		[2015.05.18]
 		enabled editing code
+	ver 1.3 	[2015.05.26]
+		fixed:
+			&lt; &gt; &amp; 
 	bugs:
 	- char encoding
 	- inline comment (C++)
-	- &lt; &gt; &amp;
 */
 
 class CodeHL
@@ -36,7 +38,7 @@ class CodeHL
 	var $style = "normal";
 	var $codeHeader = "Sample code";
 	var $timestamps = array();
-	var $ver = "1.1";
+	var $ver = "1.3";
 
 	function timestamp($name="noname")
 	{
@@ -105,8 +107,6 @@ class CodeHL
 		$class 			= array();
 		$regpart 		= array();
 
-		
-		
 		foreach($this->lang_data['MULTICOMMENT'] as $b => $e)
 		{
 			array_push($pattern,addcslashes($b,$escapechars).'.*?'.addcslashes($e,$escapechars));
@@ -129,7 +129,6 @@ class CodeHL
 			$reg .= $e;
 			array_push($pattern,$reg);
 			array_push($class,'<span class=\'text\'>$0</span>');
-
 		}
 		
 		array_push($pattern,$this->lang_data['VARIABLEPATTERN']);
@@ -147,9 +146,11 @@ class CodeHL
 		if(isset($this->lang_data['INTXT'])) $tmpVar .= '['.$this->lang_data['INTXT'].']{0,1}';
 		array_push($pattern,$tmpVar);
 		array_push($class,'<span class=\'dec-number\'>$0</span>');
-		/**/
-
+	
 		array_push($pattern,'\\r\\n|\\r|\\n');
+		array_push($class,'$0');
+
+		array_push($pattern,'&amp;|&gt;|&lt;');
 		array_push($class,'$0');
 		
 		$splitted = preg_split('/('.implode(')|(',$pattern).')/s', $this->clearCode, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
@@ -159,7 +160,6 @@ class CodeHL
 			if(substr($p,-1) != '$') array_push($regpart,'/^'.$p.'$/s');
 			else array_push($regpart,'/^'.$p.'/s');
 		}
-
 
 		$formatted = preg_filter($regpart,$class,$splitted);
 
@@ -196,8 +196,9 @@ class CodeHL
 			{
 				$parsed[$key] = $item;
 				if($this->array_match($item,$this->lang_data['DELIMITERS']))
-				{					
-					$parsed[$key] = "<span class='delimiters'>{$item}</span>";							
+				{
+					//$item = str_replace(["&","<",">"],["&amp;","&lt;","&gt;"],$item);
+					$parsed[$key] = "<span class='delimiters'>{$item}</span>";					
 				}
 				else
 				{
@@ -227,6 +228,8 @@ class CodeHL
 		$this->timestamp("1");
 		$formatted = array();
 		$splitted = array();
+
+		$this->clearCode = str_replace(["&","<",">"],["&amp;","&lt;","&gt;"],$this->clearCode);
 		
 		$this->commentText($formatted,$splitted);
 		$this->timestamp("CommentText");
@@ -239,14 +242,12 @@ class CodeHL
 		$splitted = preg_split('/(\\r\\n|\\r|\\n)/', implode($formatted));
 		$this->timestamp("końce linii");
 /********** NOT SURE **********/
-
 		$next = array();
 		foreach($splitted as &$spli)
 		{
 			if(strlen($spli) >0 && substr($spli,5) != '<span' && isset($next['class'])) 
 			{
-				$spli = '<span class=\''.$next['class'].'\'>'.$spli; 
-				
+				$spli = '<span class=\''.$next['class'].'\'>'.$spli; 				
 			}
 			if(strlen($spli) >0 && substr($spli,-7) != '</span>') 
 			{
@@ -254,17 +255,15 @@ class CodeHL
 				preg_match('/<span class=\'(?P<class>.+?)\'>.*?$/', substr($spli,strrpos($spli,'<span')),$next);				
 				$spli .= "</span>";				
 			}
-			else unset($next);
-			
+			else unset($next);			
 		}
-		$this->timestamp("testowy frag");
+		$this->timestamp("Done!");
 /*******************************/
-
 		$this->parsedCode = "<table class='{$this->style}'>";
 		//header
-		if(1) $this->parsedCode .= "<thead><tr><th colspan='2'><span class='title'>{$this->codeHeader}</span><span class='language'>{$this->lang_data['LANGNAME']}</span></th></tr></thead>";
+		if(1) $this->parsedCode .= "<thead><tr><th colspan='2'><span class='title'>{$this->codeHeader}</span><span class='language'>CodeHL {$this->ver} <b>[{$this->lang_data['LANGNAME']}]</b></span></th></tr></thead>";
 		//footer
-		if(1) 
+		if(0) 
 		{
 			$this->parsedCode .= "<tfoot><tr><td colspan=2><span class='parsed-time'>";
 			$this->parsedCode .= $this->showtimestamps(false);
@@ -277,14 +276,13 @@ class CodeHL
 		$nr = $this->startLine;
 		foreach($splitted as $s)
 		{
-
 			$lineNumbers .= "<pre>$nr</pre>";
 			$codeLines .= "<pre>".(strlen($s)>0?$s:" ")."</pre>";
 			$nr++;
 		}
 		//linenubers
 		$this->parsedCode .= "<tr>";
-		if($this->numLines == 'off') $this->parsedCode .= " <td style='width: 0px; border-right: 0px;'></td><td>";
+		if($this->numLines == 'off') $this->parsedCode .= "<td style='width: 0px; border-right: 0px;'></td><td>";
 		else $this->parsedCode .= "<td>$lineNumbers</td><td>";		
 		$this->parsedCode .= $codeLines."</td></tr>";
 		echo "</table>";

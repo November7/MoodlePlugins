@@ -34,6 +34,7 @@ $lang_data = array(
 			'typedef','sizeof',
 			'public','protected','private',
 			'try','throw','catch',
+			'using','namespace',
 			'return','true','false','null'),
 		2 => array(
 			'char','bool','int','float','double','void','enum',

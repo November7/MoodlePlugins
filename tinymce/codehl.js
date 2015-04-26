@@ -3,8 +3,8 @@
 /*																					 */
 /*							  Version: 1.0 [2015.04.14]								 */
 /*							  Version: 1.1 [2015.04.18]								 */
+/*							  Version: 1.3 [2015.04.26]								 */
 /*************************************************************************************/
-
 
 /*************************************************************************************/
 /*																					 */
@@ -101,12 +101,20 @@ var codehlDialog =
 				var strLine="";
 				for(var i=0;i<htmlTag.length;i++)
 				{
-					//console.log(htmlTag[i].innerHTML);
 					if(i) textareaControl.value+="\n";
-					strLine = htmlTag[i].innerHTML.replace(/\<[^\>]*\>/gi, "");
+					strLine = htmlTag[i].innerHTML;
+					strLine = strLine.replace(/\<[^\>]*\>/gi, "");
+					strLine = strLine.replace(/\&amp\;/gi, "&");
+					strLine = strLine.replace(/\&lt\;/gi, "<");
+					strLine = strLine.replace(/\&gt\;/gi, ">");
 					textareaControl.value += strLine;
 				}
 			}
+			if( (htmlTag = mainDiv.getElementsByTagName('table')))
+			{
+				this.selectCombo(themeControl,htmlTag[0].className);
+			}
+
 		}
 
 		var xmlHttp = new XMLHttpRequest();
@@ -178,7 +186,7 @@ var codehlDialog =
 	tabKey : function(e)
 	{
 		var ed = tinyMCEPopup.editor;
-		var tabChar = "  ";
+		var tabChar = "	";
 		if (e.keyCode) code = e.keyCode;
 		else if (e.which) code = e.which;
 		if(code != null && code == 9)
@@ -236,6 +244,7 @@ var codehlDialog =
 		var textareaVal	  	= textareaControl.value;
 		var numVal	  		= numControl.value;
 		var startNumberVal	= startNumberControl.value;
+		var themeVal		= themeControl.value;
 		var divWidth		= "auto";
 	
 		var widthNumber = parseInt(codehlWidth.value);
@@ -252,6 +261,7 @@ var codehlDialog =
 						'&headerVal=' 		+ encodeURIComponent(headerVal) 	+
 						'&textareaVal=' 	+ encodeURIComponent(textareaVal) 	+
 						'&numVal=' 			+ encodeURIComponent(numVal) 		+
+						'&themeVal='		+ encodeURIComponent(themeVal) 		+
 						'&startNumberVal=' 	+ encodeURIComponent(startNumberVal));
 
 		if (xmlHttp.readyState == 4 && xmlHttp.status==200)
@@ -273,7 +283,8 @@ var codehlDialog =
 				tinyMCEPopup.execCommand("mceInsertContent",false,"<p></p>");
 				tinyMCEPopup.execCommand("mceInsertContent",false,htmlContent);
 
-				ed.addVisual(ed.getBody());
+				//ed.addVisual(ed.getBody());
+
 			}
 			else
 			{
