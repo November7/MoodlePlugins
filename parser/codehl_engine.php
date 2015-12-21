@@ -22,6 +22,8 @@
 	ver 1.3 	[2015.05.26]
 		fixed:
 			&lt; &gt; &amp; 
+	ver 1.4		[2015.12.]
+
 	bugs:
 	- char encoding
 	- inline comment (C++)
@@ -38,7 +40,7 @@ class CodeHL
 	var $style = "normal";
 	var $codeHeader = "Sample code";
 	var $timestamps = array();
-	var $ver = "1.3";
+	var $ver = "1.4";
 
 	function timestamp($name="noname")
 	{
