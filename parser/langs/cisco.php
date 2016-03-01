@@ -83,7 +83,7 @@ $lang_data = array(
 			'running-config','startup-config','password-encryption',
 			'mac-address-table','class-map','access-lists','controllers','dhcp','flash','frame-relay',
 			'history','policy-map','protocols','queue','queueing','sessions','spanning-tree','storm-control',
-			'tcp','udp','icmp'.'ahp','tech-support','users','version','vlan-switch','route','rip','ospf','eigrip','gre'
+			'tcp','udp','icmp','ahp','tech-support','users','version','vlan-switch','route','rip','ospf','eigrip','gre'
 			)
 					
 		),

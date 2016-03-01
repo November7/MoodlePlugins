@@ -44,7 +44,7 @@ class CodeHL
 	var $style = "normal";
 	var $codeHeader = "Sample code";
 	var $timestamps = array();
-	var $ver = "1.5";
+	var $ver = "1.5.1";
 
 	function timestamp($name="noname")
 	{
