@@ -44,7 +44,7 @@ $lang_data = array(
 			'verify','vlan','voice','vtp',
 			'webvpn','where','write',
 			//
-			'aaa','access-list','alias','appfw','application','archive','arp','async-bootp',
+			's','aaa','access-list','alias','appfw','application','archive','arp','async-bootp',
 			'banner','bba-group','beep','boot','bridge','buffers','busy-message',
 			'call','call-history-mib','capf-server','carrier-id','cdp','cef','chat-script','class-map','clock','cns',
 			'config-register','configuration','connect','control-plane','coverage','credentials','crypto','ctl-client',
@@ -83,12 +83,12 @@ $lang_data = array(
 			'running-config','startup-config','password-encryption',
 			'mac-address-table','class-map','access-lists','controllers','dhcp','flash','frame-relay',
 			'history','policy-map','protocols','queue','queueing','sessions','spanning-tree','storm-control',
-			'tcp','udp','icmp','ahp','tech-support','users','version','vlan-switch','route','rip','ospf','eigrip','gre'
+			'tcp','udp','icmp','ahp','tech-support','users','version','vlan-switch','route','rip','ospf','eigrp','gre','esp'
 			)
 					
 		),
 	'VARIABLEPATTERN' => '[a-zA-Z_-]{1,}[0-9]{0,}',
-	'COMMENT' => array('##' => '\\'),
+	'COMMENT' => array(':' => '\\'),
 	'MULTICOMMENT' => array(),
 	'TEXT' => array(),
 	/* delimiters (including space!) and operators (one-char operator) */

@@ -26,11 +26,11 @@
 		minor changes
 	ver 1.5		[2016.03.01]
 		fixed:	
-			char enconding
+			char enconding bug
+	ver 1.6
+		fixed:
+			keywords matching bug
 
-	bugs:
-	
-	- inline comment (C++)
 */
 
 class CodeHL
@@ -44,7 +44,7 @@ class CodeHL
 	var $style = "normal";
 	var $codeHeader = "Sample code";
 	var $timestamps = array();
-	var $ver = "1.5.1";
+	var $ver = "1.6";
 
 	function timestamp($name="noname")
 	{
@@ -96,7 +96,7 @@ class CodeHL
 	{
 		return $this->lang_data['LANGNAME'];
 	}	
-
+/*
 	function array_match($pattern,$subject)
 	{
 		foreach($subject as $item)
@@ -104,7 +104,7 @@ class CodeHL
 			if(strpos($pattern,$item)!==false) return true;
 		}
 		return false;
-	}
+	}*/
 	
 	function commentText(&$formatted,&$splitted)
 	{		
@@ -179,15 +179,17 @@ class CodeHL
 		foreach($splitted as $k=>$fraq)
 		{
 			$ret = array($fraq);
-			//array_push($this->lang_data['DELIMITERS'], ' ');  //space ?????????????????
+
 			foreach ($this->lang_data['DELIMITERS'] as $splitter)
 			{
+
 				$splitrow = array();
 				foreach ($ret as $row)
 				{
 					$spli = array();
 					foreach(preg_split("/\\".$splitter."/",$row) as $r)
 					{
+
 						array_push($spli,$r);
 						array_push($spli,$splitter); 
 					}
@@ -197,11 +199,14 @@ class CodeHL
 					//$splitrow = array_merge($splitrow,$spli);
 				}
 				$ret = $splitrow;
+
 			}
+
 			foreach($ret as $key=>&$item)
 			{
-				$parsed[$key] = $item;
-				if($this->array_match($item,$this->lang_data['DELIMITERS']))
+				$parsed[$key] = $item;			
+
+				if(in_array($item,$this->lang_data['DELIMITERS']))
 				{
 					//$item = str_replace(["&","<",">"],["&amp;","&lt;","&gt;"],$item);
 					$parsed[$key] = "<span class='delimiters'>{$item}</span>";					
@@ -210,7 +215,7 @@ class CodeHL
 				{
 					foreach($this->lang_data['KEYWORDS'] as $group => $keyword)
 					{
-						if($this->array_match($item,$keyword))	
+						if(in_array($item,$keyword))	
 						{
 							$parsed[$key] = "<span class='keyword{$group}'>{$item}</span>";
 						}	
