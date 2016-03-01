@@ -84,7 +84,7 @@ $lang_data = array(
 					
 		),
 	'VARIABLEPATTERN' => '[a-zA-Z_-]{1,}[0-9]{0,}',
-	'COMMENT' => array(';' => '\\'),
+	'COMMENT' => array('##' => '\\'),
 	'MULTICOMMENT' => array(),
 	'TEXT' => array(),
 	/* delimiters (including space!) and operators (one-char operator) */

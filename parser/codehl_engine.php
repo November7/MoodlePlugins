@@ -22,10 +22,14 @@
 	ver 1.3 	[2015.05.26]
 		fixed:
 			&lt; &gt; &amp; 
-	ver 1.4		[2015.12.]
+	ver 1.4		[2015.12.--]
+		minor changes
+	ver 1.5		[2016.03.01]
+		fixed:	
+			char enconding
 
 	bugs:
-	- char encoding
+	
 	- inline comment (C++)
 */
 
@@ -40,7 +44,7 @@ class CodeHL
 	var $style = "normal";
 	var $codeHeader = "Sample code";
 	var $timestamps = array();
-	var $ver = "1.4";
+	var $ver = "1.5";
 
 	function timestamp($name="noname")
 	{
@@ -117,7 +121,7 @@ class CodeHL
 
 		foreach($this->lang_data['COMMENT'] as $b => $e)
 		{
-			$reg = addcslashes($b,$escapechars).'[[:print:]]*';			
+			$reg = addcslashes($b,$escapechars).'[\x20-\xFF]*';			
 			array_push($pattern,$reg);
 			array_push($class,'<span class=\'comment\'>$0</span>');
 		}
