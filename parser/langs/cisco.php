@@ -8,12 +8,14 @@
 	ver: 0.9.1 [2015.04.03]
 	ver: 0.9.2 [2015.04.12]
 		 add variable pattern
+	var: 1.3   [2016.03.01]
+		done
 	bug:
 		problem with multi-name
 */
 
 $lang_data = array(
-	'VER' => '1.2', 
+	'VER' => '1.3', 
 	'LANGNAME' => 'CISCO CLI',
 	'CASESENSITIVE' => array(
 		1 => false,
@@ -76,10 +78,12 @@ $lang_data = array(
 			),
 		2 => array(
 			'secret','range','address','vlans','mode','access','trunk','standard','extended',
-			'deny','permit','remark','host','running-config','startup-config','password-encryption',
+			'deny','permit','remark','host',
+			'in','out','any',			
+			'running-config','startup-config','password-encryption',
 			'mac-address-table','class-map','access-lists','controllers','dhcp','flash','frame-relay',
 			'history','policy-map','protocols','queue','queueing','sessions','spanning-tree','storm-control',
-			'tcp','tech-support','users','version','vlan-switch','route','rip'
+			'tcp','udp','icmp'.'ahp','tech-support','users','version','vlan-switch','route','rip','ospf','eigrip','gre'
 			)
 					
 		),
