@@ -3,8 +3,10 @@
 	Info:
 	keywords: max. 4 groups
 	delimiters: (including space!) and operators (one-char operator)
-	ver: 0.1   [2016.03.05]: 
+	ver: 0.1   	[2016.03.05]: 
 		first try
+	ver: 0.2	[2016.03.05]:
+		some keywords for testing
 		
 	
 */
