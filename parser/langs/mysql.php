@@ -11,7 +11,7 @@
 
 $lang_data = array(
 	'VER' => '1.3', 
-	'LANGNAME' => 'CISCO CLI',
+	'LANGNAME' => 'MySQL',
 	'CASESENSITIVE' => array(
 		1 => false,
 		2 => false,
@@ -20,12 +20,23 @@ $lang_data = array(
 		),
 	'KEYWORDS' => array(
 		1 => array(
-			'CREATE'
+			'CREATE','DELETE','UPDATE','INSERT','SELECT','ALTER','MERGE',
+			'DROP', 
 			),
 		2 => array(
-			'TABLE'
+			'TABLE', 'DATABASE', 'TRIGGER', 'PROCEDURE', 'FUNCTION',
+			'LEFT', 'RIGHT', 'JOIN',
+			'WHERE', 'FROM', 'OREDER', 'BY', 'AS', 'GROUP', 'HAVING','LIMIT', 'OR','AND','BETWEEN',
+			'IN','IF','LIKE','CASE','THEN','LOOP','WHILE','REPEAT', 
+
+			),
+		3 => array(
+			'int','char','varchar','NOT','NULL','auto_increment'
+			),
+		4 => array(
+			'ENGINE','INNODB','MYISAM','MEMORY'
 			)
-					
+ 					
 		),
 	'VARIABLEPATTERN' => '[a-zA-Z_-]{1,}[0-9]{0,}',
 	'COMMENT' => array('//' => '\\'),
