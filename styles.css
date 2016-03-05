@@ -104,16 +104,17 @@ div.codehl table.dark td:nth-child(1)	pre:nth-child(2n+1) 	{background: #333 !im
 div.codehl table.dark td:nth-child(2)	pre:nth-child(2n)		{background: #222 !important;}
 div.codehl table.dark td:nth-child(2)	pre:nth-child(2n+1) 	{background: #333 !important;}
 
-div.codehl table.dark span.keyword1 {color: #0000CC; font-weight: bold;}
-div.codehl table.dark span.keyword2 {color: #006600; font-weight: bold;}
-div.codehl table.dark span.keyword3 {color: #669900;}
-div.codehl table.dark span.keyword4 {color: #336600;}
+div.codehl table.dark span.keyword1	 		{color: #0000CC; font-weight: bold;}
+div.codehl table.dark span.keyword2 		{color: #006600; font-weight: bold;}
+div.codehl table.dark span.keyword3 		{color: #669900;}
+div.codehl table.dark span.keyword4 		{color: #336600;}
+div.codehl table.dark span.oct-number 		{color: #0099CC;}
+div.codehl table.dark span.dec-number 		{color: #0099CC;}
+div.codehl table.dark span.hex-number 		{color: #0099CC;}
+div.codehl table.dark span.double-number 	{color: #0099CC;}
+div.codehl table.dark span.text 			{color: #990000;}
+div.codehl table.dark span.multicomment 	{color: #999966;}
+div.codehl table.dark span.comment 			{color: #999966;}
+div.codehl table.dark span.delimiter 		{color: #000000;}
 
-div.codehl table.dark span.oct-number {color: #0099CC;}
-div.codehl table.dark span.dec-number {color: #0099CC;}
-div.codehl table.dark span.hex-number {color: #0099CC;}
-div.codehl table.dark span.double-number {color: #0099CC;}
-div.codehl table.dark span.text {color: #990000;}
-div.codehl table.dark span.multicomment {color: #999966;}
-div.codehl table.dark span.comment {color: #999966;}
-div.codehl table.dark span.delimiter {color: #000000;}
+/*************************************************************************************************************/

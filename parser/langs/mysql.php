@@ -25,7 +25,7 @@ $lang_data = array(
 			),
 		2 => array(
 			'TABLE', 'DATABASE', 'TRIGGER', 'PROCEDURE', 'FUNCTION',
-			'LEFT', 'RIGHT', 'JOIN',
+			'LEFT', 'RIGHT', 'JOIN','LIKE',
 			'WHERE', 'FROM', 'OREDER', 'BY', 'AS', 'GROUP', 'HAVING','LIMIT', 'OR','AND','BETWEEN',
 			'IN','IF','LIKE','CASE','THEN','LOOP','WHILE','REPEAT', 
 

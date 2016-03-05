@@ -30,6 +30,8 @@
 	ver 1.6
 		fixed:
 			keywords matching bug
+	ver 1.7		[2016.03.05]
+		Feature: key-words case sensitivity
 
 */
 
@@ -95,16 +97,15 @@ class CodeHL
 	function getLanguageName()
 	{
 		return $this->lang_data['LANGNAME'];
-	}	
-/*
-	function array_match($pattern,$subject)
+	}
+
+	function in_array_case($needle, $haystack, $case = true)
 	{
-		foreach($subject as $item)
-		{
-			if(strpos($pattern,$item)!==false) return true;
-		}
-		return false;
-	}*/
+		if($case)
+			return in_array($needle, $haystack);
+		else
+			return in_array(strtolower($needle), array_map('strtolower', $haystack));
+	}
 	
 	function commentText(&$formatted,&$splitted)
 	{		
@@ -215,9 +216,9 @@ class CodeHL
 				{
 					foreach($this->lang_data['KEYWORDS'] as $group => $keyword)
 					{
-						if(in_array($item,$keyword))	
+						if( $this->in_array_case($item,$keyword,$this->lang_data['CASESENSITIVE'][$group]))
 						{
-							$parsed[$key] = "<span class='keyword{$group}'>{$item}</span>";
+							$parsed[$key] = "<span class='keyword{$group}'>{$item}</span>";	
 						}	
 					}
 				}
