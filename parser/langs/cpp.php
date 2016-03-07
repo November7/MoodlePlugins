@@ -14,16 +14,19 @@
 	change: delimiters without space!
 	ver: 0.9.4 [2015.04.12]
 		 add variable pattern
+	ver: 1.0   [2016.03.07]
+		fix casesensitive table
 
 */
 
 $lang_data = array(
-	'VER' => '0.9.3', 
+	'VER' => '1.0', 
 	'LANGNAME' => 'C++',
 	'CASESENSITIVE' => array(
 		1 => true,
 		2 => true,
-		3 => true
+		3 => true,
+		4 => true
 		),
 	'KEYWORDS' => array(
 		1 => array(
