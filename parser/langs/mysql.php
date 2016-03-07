@@ -22,13 +22,15 @@ $lang_data = array(
 		),
 	'KEYWORDS' => array(
 		1 => array(
-			'CREATE','DELETE','UPDATE','INSERT','SELECT','ALTER','MERGE',
-			'DROP', 
+			'CREATE','DELETE','UPDATE','INSERT',
+			'SELECT','ALTER','MERGE','DROP',
+			'DATABASE','DATABASES','TABLE','DATABASE','PROCEDURE', 'FUNCTION', 
 			),
 		2 => array(
-			'TABLE', 'DATABASE', 'TRIGGER', 'PROCEDURE', 'FUNCTION',
-			'LEFT', 'RIGHT', 'JOIN','LIKE',
-			'WHERE', 'FROM', 'OREDER', 'BY', 'AS', 'GROUP', 'HAVING','LIMIT', 'OR','AND','BETWEEN',
+			 
+			'LEFT', 'RIGHT', 'JOIN','LIKE','WHERE', 'FROM', 
+			'OREDER', 'BY', 'AS', 'GROUP', 'HAVING','LIMIT', 
+			'OR','AND','BETWEEN',
 			'IN','IF','LIKE','CASE','THEN','LOOP','WHILE','REPEAT', 
 
 			),
