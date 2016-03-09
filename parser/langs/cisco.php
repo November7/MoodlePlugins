@@ -18,10 +18,10 @@ $lang_data = array(
 	'VER' => '1.3', 
 	'LANGNAME' => 'CISCO CLI',
 	'CASESENSITIVE' => array(
-		1 => false,
-		2 => false,
-		3 => false,
-		4 => false
+		1 => true,
+		2 => true,
+		3 => true,
+		4 => true
 		),
 	'KEYWORDS' => array(
 		1 => array(
@@ -44,7 +44,7 @@ $lang_data = array(
 			'verify','vlan','voice','vtp',
 			'webvpn','where','write',
 			//
-			's','aaa','access-list','alias','appfw','application','archive','arp','async-bootp',
+			's','aaa','access-list','alias','appfw','application','archive','arp','async-bootp','access-group',
 			'banner','bba-group','beep','boot','bridge','buffers','busy-message',
 			'call','call-history-mib','capf-server','carrier-id','cdp','cef','chat-script','class-map','clock','cns',
 			'config-register','configuration','connect','control-plane','coverage','credentials','crypto','ctl-client',
@@ -78,7 +78,8 @@ $lang_data = array(
 			),
 		2 => array(
 			'secret','range','address','vlans','mode','access','trunk','standard','extended',
-			'deny','permit','remark','host',
+			'deny','permit','remark','host','pool','binding','conflict',
+			'excluded-address','network','default-router','dns-server','option',
 			'in','out','any',			
 			'running-config','startup-config','password-encryption',
 			'mac-address-table','class-map','access-lists','controllers','dhcp','flash','frame-relay',
