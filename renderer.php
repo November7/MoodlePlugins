@@ -179,11 +179,38 @@ class qtype_multianswer_textfield_renderer extends qtype_multianswer_subq_render
     public function subquestion(question_attempt $qa, question_display_options $options,
             $index, question_graded_automatically $subq) {
 
+        $default = "";
+        if(preg_match('/\:[\s\S]*\:([\s\S]*?)~|$/',$subq->questiontext,$default)) {
+            $default = $default[1];
+            if(substr($default,0,1) == "=") {
+                $default = substr($default,1);
+            }
+        }
+        
+        $isDefault = false;
+        if($subq->usecase > 1) {
+            $subq->usecase %= 2;
+            $isDefault = true;
+        }
+
         $fieldprefix = 'sub' . $index . '_';
         $fieldname = $fieldprefix . 'answer';
 
+
         $response = $qa->get_last_qt_var($fieldname);
-        if ($subq->qtype->name() == 'shortanswer') {
+
+        /*******************************************************************************/
+        /*       hack empty fields                                                     */
+        /*******************************************************************************/
+        if($isDefault)
+        {         
+           if($response == "") $response = $default;
+           if(!preg_match("/^\s{1,}$/u",$response)) {
+                $response = preg_replace("/\s/u","",$response);
+           }
+        }     
+
+        if ($subq->qtype->name() == 'shortanswer') {           
             $matchinganswer = $subq->get_matching_answer(array('answer' => $response));
         } else if ($subq->qtype->name() == 'numerical') {
             list($value, $unit, $multiplier) = $subq->ap->apply_units($response, '');
@@ -207,8 +234,6 @@ class qtype_multianswer_textfield_renderer extends qtype_multianswer_subq_render
         }
         $size = min(60, round($size /*+ rand(0, $size * 0.15)*/));
         // The rand bit is to make guessing harder.
-	
-	//if($response == "") $response = '?';
 
         $inputattributes = array(
             'type' => 'text',
@@ -228,7 +253,7 @@ class qtype_multianswer_textfield_renderer extends qtype_multianswer_subq_render
         }
 
         if ($subq->qtype->name() == 'shortanswer') {
-            $correctanswer = $subq->get_matching_answer($subq->get_correct_response());
+            $correctanswer = $subq->get_matching_answer($subq->get_correct_response());          
         } else {
             $correctanswer = $subq->get_correct_answer();
         }
@@ -270,13 +295,20 @@ class qtype_multianswer_multichoice_inline_renderer
         $choices = array();
         $matchinganswer = new question_answer(0, '', null, '', FORMAT_HTML);
         $rightanswer = null;
+       
         foreach ($subq->get_order($qa) as $value => $ansid) {
-            $ans = $subq->answers[$ansid];
+            
+            $ans = $subq->answers[$ansid];         
             $choices[$value] = $subq->format_text($ans->answer, $ans->answerformat,
                     $qa, 'question', 'answer', $ansid);
             if ($subq->is_choice_selected($response, $value)) {
                 $matchinganswer = $ans;
             }
+        }
+
+        if($response =="")
+        {
+            $response = 0;
         }
 
         $inputattributes = array(
@@ -291,8 +323,12 @@ class qtype_multianswer_multichoice_inline_renderer
             $inputattributes['class'] = $this->feedback_class($matchinganswer->fraction);
             $feedbackimg = $this->feedback_image($matchinganswer->fraction);
         }
+        
+
         $select = html_writer::select($choices, $qa->get_qt_field_name($fieldname),
                 $response, array('' => ''), $inputattributes);
+
+        
 
         $order = $subq->get_order($qa);
         $correctresponses = $subq->get_correct_response();
@@ -343,8 +379,18 @@ class qtype_multianswer_multichoice_vertical_renderer extends qtype_multianswer_
             $inputattributes['disabled'] = 'disabled';
         }
 
+        
+        $issel = false;
+        foreach ($subq->get_order($qa) as $value => $ansid) {            
+            if ($subq->is_choice_selected($response, $value)) {
+                $issel = true;
+                break;
+            } 
+        }
+
         $result = $this->all_choices_wrapper_start();
         $fraction = null;
+                   
         foreach ($subq->get_order($qa) as $value => $ansid) {
             $ans = $subq->answers[$ansid];
 
@@ -352,7 +398,8 @@ class qtype_multianswer_multichoice_vertical_renderer extends qtype_multianswer_
             $inputattributes['id'] = $inputattributes['name'] . $value;
 
             $isselected = $subq->is_choice_selected($response, $value);
-            if ($isselected) {
+            if (!$issel) $issel = $isselected = true;
+            if ($isselected) {                
                 $inputattributes['checked'] = 'checked';
                 $fraction = $ans->fraction;
             } else {
@@ -383,6 +430,7 @@ class qtype_multianswer_multichoice_vertical_renderer extends qtype_multianswer_
 
             $result .= $this->choice_wrapper_end();
         }
+        
 
         $result .= $this->all_choices_wrapper_end();
 
