@@ -1,7 +1,7 @@
 <?php
 
 defined('MOODLE_INTERNAL') || die();
-
+/*
 if ($ADMIN->fulltree) {
 
 
@@ -10,12 +10,12 @@ if ($ADMIN->fulltree) {
         'option2' => 'opcja 2',
         'option3' => 'opcja 3'];
 
-    $setting = new admin_setting_configselect('defaultfields/option',
-                                         new lang_string('option', 'defaultfields'),
-                                         new lang_string('option_desc', 'defaultfields'),
-                                         'opcja 1',
+    $setting = new admin_setting_configselect('local_defaultfields/option',
+                                         new lang_string('option', 'local_defaultfields'),
+                                         new lang_string('option_desc', 'local_defaultfields'),
+                                         'option1',
                                          $options);
-   // $settings->add($setting);
+    $settings->add($setting);
 
     $setting = new admin_setting_configcheckbox('defaultfields/xxx',
                                         new lang_string('xxx', 'defaultfields'),
@@ -23,6 +23,6 @@ if ($ADMIN->fulltree) {
                                         0);
     //$settings->add($setting);
 }
-
+*/
 
 ?>
