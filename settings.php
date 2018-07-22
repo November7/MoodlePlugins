@@ -15,11 +15,14 @@ if ($ADMIN->fulltree) {
                                          new lang_string('option_desc', 'defaultfields'),
                                          'opcja 1',
                                          $options);
-    $settings->add($setting);
+   // $settings->add($setting);
 
     $setting = new admin_setting_configcheckbox('defaultfields/xxx',
                                         new lang_string('xxx', 'defaultfields'),
                                         new lang_string('xxx_desc', 'defaultfields'),
                                         0);
-    $settings->add($setting);
+    //$settings->add($setting);
 }
+
+
+?>
