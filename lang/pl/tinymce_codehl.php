@@ -4,6 +4,7 @@
 $string['codehl:desc'] 				= 'Code Highlighter';
 $string['codehl:titleLabel']		= 'Wstaw kod źrółowy';
 $string['codehl:languageLabel'] 	= 'Wybierz język programowania';
+$string['codehl:usejavascriptparse']= 'Używaj parsera JavaScript zamiast PHP (wymagany dodatek - filtr: codehiglighter)';
 $string['codehl:headerLabel'] 		= 'Nagówek';
 $string['codehl:numLabel'] 			= 'Pokaż numery linii';
 $string['codehl:numOnLabel']	 	= 'Tak';

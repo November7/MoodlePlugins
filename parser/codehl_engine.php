@@ -33,6 +33,9 @@
 	ver 1.7		[2016.03.05]
 		Feature: key-words case sensitivity
 
+	ver 2.0
+		Feature: JavaScript Parser
+
 */
 
 class CodeHL
@@ -237,22 +240,22 @@ class CodeHL
 
 	function parseHL()
 	{	
-		$this->timestamp("1");
+	//	$this->timestamp("1");
 		$formatted = array();
 		$splitted = array();
 
 		$this->clearCode = str_replace(["&","<",">"],["&amp;","&lt;","&gt;"],$this->clearCode);
 		
 		$this->commentText($formatted,$splitted);
-		$this->timestamp("CommentText");
+	//	$this->timestamp("CommentText");
 		$this->datatypesKeywords($formatted,$splitted);
-		$this->timestamp("DataTypesKeywords");
+	//	$this->timestamp("DataTypesKeywords");
 	
 		ksort($formatted);		
-		$this->timestamp("Sortowanie");
+	//	$this->timestamp("Sortowanie");
 
 		$splitted = preg_split('/(\\r\\n|\\r|\\n)/', implode($formatted));
-		$this->timestamp("końce linii");
+	//	$this->timestamp("końce linii");
 /********** NOT SURE **********/
 		$next = array();
 		foreach($splitted as &$spli)
@@ -269,18 +272,18 @@ class CodeHL
 			}
 			else unset($next);			
 		}
-		$this->timestamp("Done!");
+	//	$this->timestamp("Done!");
 /*******************************/
 		$this->parsedCode = "<table class='{$this->style}'>";
 		//header
 		if(1) $this->parsedCode .= "<thead><tr><th colspan='2'><span class='title'>{$this->codeHeader}</span><span class='language'>CodeHL {$this->ver} <b>[{$this->lang_data['LANGNAME']}]</b></span></th></tr></thead>";
 		//footer
-		if(0) 
+	/*	if(0) 
 		{
 			$this->parsedCode .= "<tfoot><tr><td colspan=2><span class='parsed-time'>";
 			$this->parsedCode .= $this->showtimestamps(false);
 			$this->parsedCode .= "</span><span class='version'>CodeHL v{$this->ver}</span></td></tr></tfoot>";
-		}
+		}*/
 		
 		$lineNumbers = "";
 		$codeLines = "";

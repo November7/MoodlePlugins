@@ -3,6 +3,7 @@
 $string['codehl:desc'] 				= 'Code Highlighter';
 $string['codehl:titleLabel']		= 'Insert Code';
 $string['codehl:languageLabel'] 	= 'Choose the language';
+$string['codehl:usejavascriptparse']= 'Use the JavaScript parser instead of PHP (needed plugin filter: codehiglighter)';
 $string['codehl:headerLabel'] 		= 'Header';
 $string['codehl:numLabel'] 			= 'Show line numbers';
 $string['codehl:numOnLabel']	 	= 'Yes';
