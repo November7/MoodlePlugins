@@ -42,6 +42,7 @@ var startNumberControl 	= null;
 var codehlWidth 		= null;
 var codehlWidthUnit 	= null;
 var themeControl		= null;
+var useJavaScriptParser = null;
 var classPrefix 		= 'codehl_';
 
 /*************************************************************************************/
@@ -139,6 +140,7 @@ var codehlDialog =
 		codehlWidth			= document.getElementById('codehlWidth');
 		codehlWidthUnit		= document.getElementById('codehlWidthUnit');
 		themeControl		= document.getElementById('themeControl');
+		useJavaScriptParser	= document.getElementById('useJavaScriptParser');
 		
 		textareaControl.onkeydown = this.tabKey;
 
@@ -168,7 +170,7 @@ var codehlDialog =
 
     onCancel : function()
     {
-    	if(confirm('want quit?'))
+    	if(confirm('Quit without save?'))
     		tinyMCEPopup.close();
     },
 
@@ -217,7 +219,7 @@ var codehlDialog =
 
 	resizeTextarea : function()
 	{
-		var diff = 200;
+		var diff = 220;
 		if (!tinymce.isIE) contentHeight = self.innerHeight - diff;
 		else contentHeight = document.body.clientHeight - diff;
 
@@ -238,14 +240,15 @@ var codehlDialog =
 
 	insertCode : function()
 	{
-		var langOptionTag 	= document.getElementById('langOption');
-		var languageVal	  	= langOptionTag.options[ langOptionTag.selectedIndex ].value;
-		var headerVal	  	= headerControl.value;
-		var textareaVal	  	= textareaControl.value;
-		var numVal	  		= numControl.value;
-		var startNumberVal	= startNumberControl.value;
-		var themeVal		= themeControl.value;
-		var divWidth		= "auto";
+		var langOptionTag 		= document.getElementById('langOption');
+		var languageVal	  		= langOptionTag.options[ langOptionTag.selectedIndex ].value;
+		var headerVal	  		= headerControl.value;
+		var textareaVal	  		= textareaControl.value;
+		var numVal	  			= numControl.value;
+		var startNumberVal		= startNumberControl.value;
+		var themeVal			= themeControl.value;
+		var useJSVal 			= useJavaScriptParser.value;
+		var divWidth			= "auto";
 	
 		var widthNumber = parseInt(codehlWidth.value);
 		if( !isNaN(widthNumber) )
@@ -262,6 +265,7 @@ var codehlDialog =
 						'&textareaVal=' 	+ encodeURIComponent(textareaVal) 	+
 						'&numVal=' 			+ encodeURIComponent(numVal) 		+
 						'&themeVal='		+ encodeURIComponent(themeVal) 		+
+						'&useJSVal='		+ encodeURIComponent(useJSVal) 		+
 						'&startNumberVal=' 	+ encodeURIComponent(startNumberVal));
 
 		if (xmlHttp.readyState == 4 && xmlHttp.status==200)

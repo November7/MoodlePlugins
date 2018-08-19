@@ -33,8 +33,9 @@
 	ver 1.7		[2016.03.05]
 		Feature: key-words case sensitivity
 
-	ver 2.0
+	ver 2.0 (beta)
 		Feature: JavaScript Parser
+		
 
 */
 
@@ -49,7 +50,8 @@ class CodeHL
 	var $style = "normal";
 	var $codeHeader = "Sample code";
 	var $timestamps = array();
-	var $ver = "1.7";
+	var $ver = "2.0 (beta)";
+	var $parserEngine = "PHP";
 
 	function timestamp($name="noname")
 	{
@@ -240,50 +242,41 @@ class CodeHL
 
 	function parseHL()
 	{	
-	//	$this->timestamp("1");
 		$formatted = array();
 		$splitted = array();
 
 		$this->clearCode = str_replace(["&","<",">"],["&amp;","&lt;","&gt;"],$this->clearCode);
-		
-		$this->commentText($formatted,$splitted);
-	//	$this->timestamp("CommentText");
-		$this->datatypesKeywords($formatted,$splitted);
-	//	$this->timestamp("DataTypesKeywords");
-	
-		ksort($formatted);		
-	//	$this->timestamp("Sortowanie");
 
-		$splitted = preg_split('/(\\r\\n|\\r|\\n)/', implode($formatted));
-	//	$this->timestamp("końce linii");
-/********** NOT SURE **********/
-		$next = array();
-		foreach($splitted as &$spli)
-		{
-			if(strlen($spli) >0 && substr($spli,5) != '<span' && isset($next['class'])) 
+		if ($this->parserEngine == "PHP") {
+			$this->commentText($formatted,$splitted);	
+			$this->datatypesKeywords($formatted,$splitted);
+			ksort($formatted);
+			$splitted = preg_split('/(\\r\\n|\\r|\\n)/', implode($formatted));
+			/********** NOT SURE **********/
+			$next = array();
+			foreach($splitted as &$spli)
 			{
-				$spli = '<span class=\''.$next['class'].'\'>'.$spli; 				
+				if(strlen($spli) >0 && substr($spli,5) != '<span' && isset($next['class'])) 
+				{
+					$spli = '<span class=\''.$next['class'].'\'>'.$spli; 				
+				}
+				if(strlen($spli) >0 && substr($spli,-7) != '</span>') 
+				{
+					unset($next);
+					preg_match('/<span class=\'(?P<class>.+?)\'>.*?$/', substr($spli,strrpos($spli,'<span')),$next);				
+					$spli .= "</span>";				
+				}
+				else unset($next);			
 			}
-			if(strlen($spli) >0 && substr($spli,-7) != '</span>') 
-			{
-				unset($next);
-				preg_match('/<span class=\'(?P<class>.+?)\'>.*?$/', substr($spli,strrpos($spli,'<span')),$next);				
-				$spli .= "</span>";				
-			}
-			else unset($next);			
+			/*******************************/
 		}
-	//	$this->timestamp("Done!");
-/*******************************/
+		else {
+			$splitted = preg_split('/(\\r\\n|\\r|\\n)/', ($this->clearCode));
+		}
+		
 		$this->parsedCode = "<table class='{$this->style}'>";
-		//header
-		if(1) $this->parsedCode .= "<thead><tr><th colspan='2'><span class='title'>{$this->codeHeader}</span><span class='language'>CodeHL {$this->ver} <b>[{$this->lang_data['LANGNAME']}]</b></span></th></tr></thead>";
-		//footer
-	/*	if(0) 
-		{
-			$this->parsedCode .= "<tfoot><tr><td colspan=2><span class='parsed-time'>";
-			$this->parsedCode .= $this->showtimestamps(false);
-			$this->parsedCode .= "</span><span class='version'>CodeHL v{$this->ver}</span></td></tr></tfoot>";
-		}*/
+	
+		$this->parsedCode .= "<thead><tr><th colspan='2'><span class='title'>{$this->codeHeader}</span><span class='language'>CodeHL {$this->ver} <b>[{$this->lang_data['LANGNAME']}]</b></span></th></tr></thead>";
 		
 		$lineNumbers = "";
 		$codeLines = "";

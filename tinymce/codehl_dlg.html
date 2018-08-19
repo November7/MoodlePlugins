@@ -30,7 +30,7 @@
 						<td align="right">{#codehl.themeLabel}:</td>
 						<td align="left">
 							<select name="themeControl" id="themeControl">
-								<option value="normal" selected="selected">{#codehl.normaltheme}</option>
+								<option value="normal" selected>{#codehl.normaltheme}</option>
 								<option value="dark">{#codehl.darktheme}</option>
 							</select>
 						</td>
@@ -38,7 +38,10 @@
 					<tr>
 						<td align="right">{#codehl.usejavascriptparser}:</td>
 						<td align="left">
-							<td align="left"><input type="checkbox" name="useJavaScriptParser" id="useJavaScriptParser" size="50" checked/></td>
+							<select name="useJavaScriptParser" id="useJavaScriptParser">
+								<option value="JS" >{#codehl.parserJS}</option>
+								<option value="PHP" selected>{#codehl.parserPHP}</option>
+							</select>
 						</td>
 					</tr>
 					<tr>
@@ -49,7 +52,7 @@
 						<td align="right">{#codehl.numLabel} :</td>
 						<td align="left">
 							<select name="numControl" id="numControl">
-								<option value="on" selected="selected">{#codehl.numOnLabel}</option>
+								<option value="on" selected>{#codehl.numOnLabel}</option>
 								<option value="off">{#codehl.numOffLabel}</option>
 							</select>
 						</td>
@@ -64,7 +67,7 @@
 						<td align="left">
 							<input type="text" name="codehlWidth" id="codehlWidth" value="95" size="10"/>
 							<select name="codehlWidthUnit" id="codehlWidthUnit">
-								<option value="percent" selected="selected">{#codehl.pcLabel}</option>
+								<option value="percent" selected>{#codehl.pcLabel}</option>
 								<option value="pixels">{#codehl.pxLabel}</option>
 							</select>
 						</td>
