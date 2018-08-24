@@ -4,6 +4,8 @@
 /*							  Version: 1.0 [2015.04.14]								 */
 /*							  Version: 1.1 [2015.04.18]								 */
 /*							  Version: 1.3 [2015.04.26]								 */
+/*							  Version: 2.0 [2018.08.18]								 */
+/*																					 */
 /*************************************************************************************/
 
 /*************************************************************************************/
@@ -279,20 +281,20 @@ var codehlDialog =
 				{
 					rng.collapse(false);
 				}
-				var htmlContent ="";
-				htmlContent += "<div class='codehl'><div class='"+classPrefix+languageVal+"' ";
+				var htmlContent ="<p>&nbsp;</p>";
+				htmlContent += "<div class='codehl'><div class='"+classPrefix+languageVal+"' parser='"+useJSVal+"' ";
 				htmlContent += "style='width: "+divWidth+";'>"; 
 				htmlContent += xmlHttp.responseText;
-				htmlContent += "</div></div>";
-				tinyMCEPopup.execCommand("mceInsertContent",false,"<p></p>");
+				htmlContent += "</div></div><p>&nbsp;</p>";
 				tinyMCEPopup.execCommand("mceInsertContent",false,htmlContent);
-
+				
 				//ed.addVisual(ed.getBody());
 
 			}
 			else
 			{
 				mainDiv.className		= classPrefix+languageVal;
+				mainDiv.setAttribute('parser',useJSVal);
 				mainDiv.style.width 	= divWidth;
 				mainDiv.innerHTML		= xmlHttp.responseText;
 			}
