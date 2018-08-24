@@ -1,4 +1,4 @@
-define(['jquery','core/url'], function($,url) {
+define(['jquery'], function($) {
 
  
 
@@ -67,17 +67,6 @@ define(['jquery','core/url'], function($,url) {
                     $(this).html($(this).html().replace(new RegExp("("+regcm.join("|")+")"),span("comment"))); 
                 });
             });
-            
-            /*
-            var strings = "(\".*?\"|\'.*?\')"
-            var multicomment_begin = /(\/\*((?!\*\/).)*$)/gi
-            var multicomment_end = /(\*\/)/gi
-            var multicomment_endline = /(^.*?($|\*\/))/gi
-            var keywords_lv1 = /\b(int|for|return|if|foreach)\b/gi
-            var keywords_lv2 = /\b(cout|endl)\b/gi
-            var numbers = /\b([0-9]+)\b/gi
-            */     
-
         }
     };
 });
