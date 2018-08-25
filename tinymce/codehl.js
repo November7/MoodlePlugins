@@ -282,7 +282,7 @@ var codehlDialog =
 					rng.collapse(false);
 				}
 				var htmlContent ="<p>&nbsp;</p>";
-				htmlContent += "<div class='codehl'><div class='"+classPrefix+languageVal+"' parser='"+useJSVal+"' ";
+				htmlContent += "<div class='codehl'><div class='"+classPrefix+languageVal+"' data-parser='"+useJSVal+"' "+" 'data-language='"+languageVal+"' ";
 				htmlContent += "style='width: "+divWidth+";'>"; 
 				htmlContent += xmlHttp.responseText;
 				htmlContent += "</div></div><p>&nbsp;</p>";
