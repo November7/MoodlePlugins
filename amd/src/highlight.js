@@ -1,7 +1,7 @@
 define(['jquery'], function($) {
     return {
 
-        init: function(wwwroot) {
+        init: function() {
                         
             jQuery.fn.parseCodeSplit = function(regexp,type) {
                 let splitHtml = $(this).html().split(/(<span.*?\/span>)/gi);
