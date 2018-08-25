@@ -1,7 +1,4 @@
 define(['jquery'], function($) {
-
- 
-
     return {
 
         init: function(wwwroot) {
@@ -9,16 +6,18 @@ define(['jquery'], function($) {
             var span = function(type) {
                 return '<span class="'+type+'">$1</span>';
             }
-            
-            $.getScript(wwwroot+'/filter/codehighlighter/parser_langs/cpp.js', function()
-            {
+
+            let langname = $( "div[data-parser='JS']").attr('data-language');
+
+            require(['filter_codehighlighter/'+langname], function(lang_data) {
+       
                 let artx = [];
                 lang_data.text.forEach(function(el,i) {
                     artx.push("\\"+el+".*?"+"\\"+el);
                 })
                 let regtx = new RegExp("("+artx.join('|')+")","g");
                 
-                $( "div[parser='JS'] td:eq(1) pre" ).each(function( index ) {
+                $( "div[data-parser='JS'] td:eq(1) pre" ).each(function( index ) {
                     $(this).html($(this).html().replace(regtx,span("text")));         
                 });
     
@@ -42,7 +41,7 @@ define(['jquery'], function($) {
                     let commstart = 0;
                     let mc_b = lang_data.multicomment[i];
                     let mc_e = lang_data.multicomment[i+1];
-                    $( "div[parser='JS'] td:eq(1) pre" ).each(function( index ) {
+                    $( "div[data-parser='JS'] td:eq(1) pre" ).each(function( index ) {
                         if(commstart) {
                             $(this).html($(this).html().replace(new RegExp("(^.*?($|"+mc_e+"))","g"),span("multicomment")))
                             if($(this).html().match(new RegExp("("+mc_e+")"),"g")) {
@@ -57,7 +56,7 @@ define(['jquery'], function($) {
                     });
                 }
     
-                $( "div[parser='JS'] td:eq(1) pre" ).each(function( index ) {
+                $( "div[data-parser='JS'] td:eq(1) pre" ).each(function( index ) {
                     for(let i=0;i<regky.length;++i) {
                         $(this).html($(this).html().replace(regky[i],span("keyword"+(i+1))));
                     }
