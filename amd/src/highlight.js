@@ -15,6 +15,14 @@ define(['jquery'], function($) {
                 return $(this).html().replace(regexp,'<span class="'+type+'">$1</span>');
             }
 
+            jQuery.fn.matchCode = function(regexp) {
+                let splitHtml = $(this).html().split(/(<span.*?\/span>)/gi);
+                
+                for(let i=0;i<splitHtml.length;i+=2)
+                    if(splitHtml[i].match(regexp)) return true;            
+                return false;
+            }
+
             let langname = $( "div[data-parser='JS']").attr('data-language');
             
 
@@ -45,7 +53,7 @@ define(['jquery'], function($) {
                 /*******/
                 $( "div[data-parser='JS'] td:eq(1) pre" ).each(function( index ) {
                     
-                    $(this).html($(this).parseCode(regtx,'text'));
+                    $(this).html($(this).parseCode(regtx,'text'));                    
                 });   
 
                 for(let i=0;i<lang_data.multicomment.length;i+=2) {
@@ -60,8 +68,9 @@ define(['jquery'], function($) {
                                 cs = 0;
                             }                
                         }
+                        else $(this).html($(this).parseCode(new RegExp("("+regcm.join("|")+")"),'comment'));
                         let rmc_b = new RegExp("("+mc_b + "((?!"+mc_e + ").)*$)","g");
-                        if($(this).html().match(rmc_b)) {
+                        if($(this).matchCode(rmc_b)) {
                             $(this).html($(this).parseCode(rmc_b,'multicomment'));
                             cs = 1;
                         }
@@ -69,7 +78,6 @@ define(['jquery'], function($) {
                 }
 
                 $( "div[data-parser='JS'] td:eq(1) pre" ).each(function( index ) {
-                    $(this).html($(this).parseCode(new RegExp("("+regcm.join("|")+")"),'comment'));
                     for(let i=0;i<regky.length;++i) {
                         $(this).html($(this).parseCodeSplit(regky[i],'keyword'+(i+1)));
                     }
