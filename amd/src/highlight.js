@@ -4,15 +4,13 @@ define(['jquery'], function($) {
 
     return {
 
-        init: function(content) {   
-            
-
-            
+        init: function(wwwroot) {
+                        
             var span = function(type) {
                 return '<span class="'+type+'">$1</span>';
             }
             
-            $.getScript('/moodle/filter/codehighlighter/amd/src/langs/cpp.js', function()
+            $.getScript(wwwroot+'/filter/codehighlighter/parser_langs/cpp.js', function()
             {
                 let artx = [];
                 lang_data.text.forEach(function(el,i) {
