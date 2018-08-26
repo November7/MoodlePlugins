@@ -24,10 +24,10 @@ define(['jquery'], function($) {
             }
 
             let langname = $( "div[data-parser='JS']").attr('data-language');
-            
+            if($.inArray(langname, ['cpp']) < 0) return; //temporary
 
             require(['filter_codehighlighter/'+langname], function(lang_data) {
-                
+                if(lang_data == undefined) return;
                 let artx = [];
                 lang_data.text.forEach(function(el,i) {
                     artx.push("\\"+el+".*?"+"\\"+el);
