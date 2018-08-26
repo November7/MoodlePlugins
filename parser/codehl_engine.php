@@ -35,6 +35,8 @@
 
 	ver 2.0 (beta)
 		Feature: JavaScript Parser
+	var 2.0
+		JavaScript Parser (beta)
 		
 
 */
@@ -50,7 +52,7 @@ class CodeHL
 	var $style = "normal";
 	var $codeHeader = "Sample code";
 	var $timestamps = array();
-	var $ver = "2.0 (beta)";
+	var $ver = "2.0";
 	var $parserEngine = "PHP";
 
 	function timestamp($name="noname")

@@ -69,6 +69,9 @@ var codehlDialog =
 			encodeURIComponent((mainDiv.className.indexOf(classPrefix) == 0) ? 
 			mainDiv.className.substring(classPrefix.length) : mainDiv.className);
 
+			var dataParser = mainDiv.getAttribute("data-parser");
+			if(dataParser) this.selectCombo(useJavaScriptParser,dataParser);
+
 			var nWidth = parseInt(mainDiv.style.width);
 			var strWidthUnit = 'pixels';
 			if(mainDiv.style.width.indexOf('%') != -1) strWidthUnit = 'percent';			
@@ -294,7 +297,8 @@ var codehlDialog =
 			else
 			{
 				mainDiv.className		= classPrefix+languageVal;
-				mainDiv.setAttribute('parser',useJSVal);
+				mainDiv.setAttribute('data-parser',useJSVal);
+				mainDiv.setAttribute('data-language',languageVal);
 				mainDiv.style.width 	= divWidth;
 				mainDiv.innerHTML		= xmlHttp.responseText;
 			}

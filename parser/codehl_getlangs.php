@@ -34,7 +34,7 @@ foreach ($languages as $lang)
 	$selected = ' ';
 	if( $selectedValue == $lang )
 	{
-        $selected = ' selected="selected"';
+        $selected = ' selected';
     }
 	
 	echo '<option value="' . $lang . '"' . $selected . '>' . $engine->getLanguageName() . '</option>' . "\n";

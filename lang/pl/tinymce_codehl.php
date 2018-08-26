@@ -1,12 +1,12 @@
 <?php
 
-//$string['pluginname'] 				= 'Code Highlighter';
+$string['pluginname'] 				    = 'Code Highlighter';
 $string['codehl:desc'] 			    	= 'Code Highlighter';
 $string['codehl:titleLabel']	    	= 'Wstaw kod źrółowy';
 $string['codehl:languageLabel']     	= 'Wybierz język programowania';
 $string['codehl:parserJS']              = 'JavaScript';
 $string['codehl:parserPHP']             = 'PHP';
-$string['codehl:usejavascriptparser']   = '(beta) Wybierz parser<br />JavaScript wymaga dodatku - filtr: codehiglighter';
+$string['codehl:usejavascriptparser']   = 'Wybierz parser<br />JavaScript wymaga dodatku - filtr: codehiglighter';
 $string['codehl:headerLabel'] 	    	= 'Nagówek';
 $string['codehl:numLabel'] 		    	= 'Pokaż numery linii';
 $string['codehl:numOnLabel']	    	= 'Tak';
