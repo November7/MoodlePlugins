@@ -1,6 +1,7 @@
 <?php
 
 defined('MOODLE_INTERNAL') || die();
+//test git history
 /*
 if ($ADMIN->fulltree) {
 
