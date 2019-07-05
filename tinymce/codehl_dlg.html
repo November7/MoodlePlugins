@@ -1,0 +1,94 @@
+﻿<!--
+***********************************************************************************************
+								CodeHL Moodle Plugin
+								Dialog template.
+								Version: 1.0 [2015.04.13]
+								Version: 2.0 [2018.08.18]
+***********************************************************************************************
+-->
+<html style="overflow: hidden; ">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>{#codehl.titleLabel}</title>
+		
+		<script type="text/javascript">
+				document.write("<script type='text/javascript' src='"+parent.tinyMCE.baseURL+"/tiny_mce_popup.js'></"+"script>");
+		</script> 
+		<script type="text/javascript" src="codehl.js"></script>
+		
+		<base target="_self" />
+	</head>
+	<body onResize="codehlDialog.onResize();">
+		<div style="margin: 10px 0px 10px 0px;">
+			<table border="0" cellspacing="0" cellpadding="2" style="width:100%;">
+				<tbody>
+					<tr>
+						<td align="right" width="200px">{#codehl.languageLabel}:</td>
+						<td align="left"><span id="languageControl"></span></td>
+					</tr>					
+					<tr>
+						<td align="right">{#codehl.themeLabel}:</td>
+						<td align="left">
+							<select name="themeControl" id="themeControl">
+								<option value="normal" selected>{#codehl.normaltheme}</option>
+								<option value="dark">{#codehl.darktheme}</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">{#codehl.usejavascriptparser}:</td>
+						<td align="left">
+							<select name="useJavaScriptParser" id="useJavaScriptParser">
+								<option value="JS" >{#codehl.parserJS}</option>
+								<option value="PHP" selected>{#codehl.parserPHP}</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">{#codehl.headerLabel}:</td>
+						<td align="left"><input type="text" name="headerControl" id="headerControl" size="50"/></td>
+					</tr>					
+					<tr>
+						<td align="right">{#codehl.numLabel} :</td>
+						<td align="left">
+							<select name="numControl" id="numControl">
+								<option value="on" selected>{#codehl.numOnLabel}</option>
+								<option value="off">{#codehl.numOffLabel}</option>
+							</select>
+						</td>
+					</tr>
+
+					<tr>
+						<td align="right">{#codehl.startNumberLabel} :</td>
+						<td align="left"><input type="text" name="startNumberControl" id="startNumberControl" value="1" size="10"/></td>
+					</tr>
+					<tr>
+						<td align="right">{#codehl.widthLabel} :</td>
+						<td align="left">
+							<input type="text" name="codehlWidth" id="codehlWidth" value="95" size="10"/>
+							<select name="codehlWidthUnit" id="codehlWidthUnit">
+								<option value="percent" selected>{#codehl.pcLabel}</option>
+								<option value="pixels">{#codehl.pxLabel}</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							{#codehl.textareaLabel}:<br>
+							<textarea name="textareaControl" id="textareaControl" cols="80" rows="5" style="width: 100%;
+							height: 200px; resize:both; font-family: 'Courier New',Courier,mono; font-size: 12px;"></textarea>							
+						</td>
+					</tr>
+				</tbody>
+			</table>		
+		</div>		
+		<div class="mceActionPanel">
+			<div style="float: left">
+				<input type="button" id="insert" name="insert" value="{#codehl.insertLabel}" onClick="codehlDialog.onOK();" />
+			</div>
+			<div style="float: right">
+				<input type="button" id="cancel" name="cancel" value="{#codehl.cancelLabel}" onClick="codehlDialog.onCancel();" />
+			</div>		
+		</div>	
+	</body>
+</html>
