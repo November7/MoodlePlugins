@@ -47,7 +47,6 @@ var themeControl		= null;
 var useJavaScriptParser = null;
 var classPrefix 		= 'codehl_';
 var classParserJS		= 'parserJS';
-var classParserPHP		= 'parserPHP';
 
 /*************************************************************************************/
 /*																					 */
@@ -71,18 +70,8 @@ var codehlDialog =
 			encodeURIComponent((mainDiv.className.indexOf(classPrefix) == 0) ? 
 			mainDiv.className.substring(classPrefix.length) : mainDiv.className);
 
-			/*
-			var dataParser = mainDiv.getAttribute("data-parser");			
-			*/
-			let dataParser = '';
-
-			console.log(mainDiv.className.search(classPrefix+classParserJS))
-			if(mainDiv.className.search(classPrefix+classParserJS)>=0) dataParser = classParserJS;
-			else  dataParser = classParserPHP;
-
-			console.log(dataParser)
-
-			if(dataParser) this.selectCombo(useJavaScriptParser,dataParser);
+			if(mainDiv.className.search(classPrefix+classParserJS)>=0) this.selectCombo(useJavaScriptParser,"JS");
+			else  this.selectCombo(useJavaScriptParser,"PHP");
 
 			var nWidth = parseInt(mainDiv.style.width);
 			var strWidthUnit = 'pixels';
