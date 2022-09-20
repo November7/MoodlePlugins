@@ -1,7 +1,8 @@
 define(['jquery'], function($) {
     return {
 
-        init: function() {                        
+        init: function() {   
+            console.log("highlight init");                     
             jQuery.fn.parseCodeSplit = function(regexp,type) {
                 let splitHtml = $(this).html().split(/(<span.*?\/span>)/gi);
                 for(let i=0;i<splitHtml.length;i+=2)
@@ -24,6 +25,7 @@ define(['jquery'], function($) {
 
             $( "div[data-parser='JS']").each(function() {
                 let langname = ($(this).attr('data-language'));
+                console.log("Lang: "+langname);
                 if($.inArray(langname, ['cpp']) < 0) return;
                 let pres = $(this).find("td:eq(1) pre" );
 

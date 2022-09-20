@@ -46,6 +46,8 @@ var codehlWidthUnit 	= null;
 var themeControl		= null;
 var useJavaScriptParser = null;
 var classPrefix 		= 'codehl_';
+var classParserJS		= 'parserJS';
+var classParserPHP		= 'parserPHP';
 
 /*************************************************************************************/
 /*																					 */
@@ -69,7 +71,17 @@ var codehlDialog =
 			encodeURIComponent((mainDiv.className.indexOf(classPrefix) == 0) ? 
 			mainDiv.className.substring(classPrefix.length) : mainDiv.className);
 
-			var dataParser = mainDiv.getAttribute("data-parser");
+			/*
+			var dataParser = mainDiv.getAttribute("data-parser");			
+			*/
+			let dataParser = '';
+
+			console.log(mainDiv.className.search(classPrefix+classParserJS))
+			if(mainDiv.className.search(classPrefix+classParserJS)>=0) dataParser = classParserJS;
+			else  dataParser = classParserPHP;
+
+			console.log(dataParser)
+
 			if(dataParser) this.selectCombo(useJavaScriptParser,dataParser);
 
 			var nWidth = parseInt(mainDiv.style.width);
@@ -285,7 +297,8 @@ var codehlDialog =
 					rng.collapse(false);
 				}
 				var htmlContent ="<p>&nbsp;</p>";
-				htmlContent += "<div class='codehl'><div class='"+classPrefix+languageVal+"' data-parser='"+useJSVal+"' "+" 'data-language='"+languageVal+"' ";
+//				htmlContent += "<div class='codehl'><div class='"+classPrefix+languageVal+"' data-parser='"+useJSVal+"' "+" 'data-language='"+languageVal+"' ";
+				htmlContent += "<div class='codehl'><div class='"+classPrefix+languageVal+" "+classPrefix+"parser"+useJSVal+"' ";
 				htmlContent += "style='width: "+divWidth+";'>"; 
 				htmlContent += xmlHttp.responseText;
 				htmlContent += "</div></div><p>&nbsp;</p>";
@@ -296,9 +309,9 @@ var codehlDialog =
 			}
 			else
 			{
-				mainDiv.className		= classPrefix+languageVal;
-				mainDiv.setAttribute('data-parser',useJSVal);
-				mainDiv.setAttribute('data-language',languageVal);
+				mainDiv.className		= classPrefix+languageVal+" "+classPrefix+"parser"+useJSVal;
+//				mainDiv.setAttribute('data-parser',useJSVal);
+//				mainDiv.setAttribute('data-language',languageVal);
 				mainDiv.style.width 	= divWidth;
 				mainDiv.innerHTML		= xmlHttp.responseText;
 			}
