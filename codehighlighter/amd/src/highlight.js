@@ -23,8 +23,9 @@ define(['jquery'], function($) {
                 return false;
             }
 
-            $( ".codehl_parserJS").each(function() {
-                ///let langname = ($(this).attr('data-language'));
+            $(".chParser_JS").each(function() {
+                console.log(this.className)
+                
                 let langname = "cpp";
                 console.log("Lang: "+langname);
                 if($.inArray(langname, ['cpp']) < 0) return;

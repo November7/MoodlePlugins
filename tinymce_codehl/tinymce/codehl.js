@@ -45,8 +45,10 @@ var codehlWidth 		= null;
 var codehlWidthUnit 	= null;
 var themeControl		= null;
 var useJavaScriptParser = null;
-var classPrefix 		= 'codehl_';
-var classParserJS		= 'parserJS';
+//var classPrefix 		= 'codehl_';
+//var classParserJS		= 'parserJS';
+var classLangPrefix		= 'chLang_';
+var classParserPrefix	= 'chParser_';
 
 /*************************************************************************************/
 /*																					 */
@@ -67,10 +69,10 @@ var codehlDialog =
 		if (mainDiv)
 		{
 			strVar += 'selectedValue=' + 
-			encodeURIComponent((mainDiv.className.indexOf(classPrefix) == 0) ? 
-			mainDiv.className.substring(classPrefix.length) : mainDiv.className);
+			encodeURIComponent((mainDiv.className.indexOf(classParserPrefix) == 0) ? 
+			mainDiv.className.substring(classParserPrefix.length) : mainDiv.className);
 
-			if(mainDiv.className.search(classPrefix+classParserJS)>=0) this.selectCombo(useJavaScriptParser,"JS");
+			if(mainDiv.className.search(classParserPrefix+"JS")>=0) this.selectCombo(useJavaScriptParser,"JS");
 			else  this.selectCombo(useJavaScriptParser,"PHP");
 
 			var nWidth = parseInt(mainDiv.style.width);
@@ -287,7 +289,7 @@ var codehlDialog =
 				}
 				var htmlContent ="<p>&nbsp;</p>";
 //				htmlContent += "<div class='codehl'><div class='"+classPrefix+languageVal+"' data-parser='"+useJSVal+"' "+" 'data-language='"+languageVal+"' ";
-				htmlContent += "<div class='codehl'><div class='"+classPrefix+languageVal+" "+classPrefix+"parser"+useJSVal+"' ";
+				htmlContent += "<div class='codehl'><div class='"+classLangPrefix+languageVal+" "+classParserPrefix+useJSVal+"' ";
 				htmlContent += "style='width: "+divWidth+";'>"; 
 				htmlContent += xmlHttp.responseText;
 				htmlContent += "</div></div><p>&nbsp;</p>";
@@ -298,7 +300,7 @@ var codehlDialog =
 			}
 			else
 			{
-				mainDiv.className		= classPrefix+languageVal+" "+classPrefix+"parser"+useJSVal;
+				mainDiv.className		= classLangPrefix+languageVal+" "+classParserPrefix+useJSVal;
 //				mainDiv.setAttribute('data-parser',useJSVal);
 //				mainDiv.setAttribute('data-language',languageVal);
 				mainDiv.style.width 	= divWidth;
