@@ -24,11 +24,22 @@ define(['jquery'], function($) {
             }
 
             $(".chParser_JS").each(function() {
+
+                /// do przerobienia
                 console.log(this.className)
                 
-                let langname = "cpp";
-                console.log("Lang: "+langname);
+                let re = RegExp("chLang_([a-zA-Z]+)","gm");
+                let strippedLangName;
+
+                strippedLangName = re.exec(this.className);                
+
+                console.log("Lang "+strippedLangName[1])
+
+                let langname = strippedLangName[1];
+                
                 if($.inArray(langname, ['cpp']) < 0) return;
+                ////////////////////////////
+
                 let pres = $(this).find("td:eq(1) pre" );
 
                 require(['filter_codehighlighter/'+langname], function(lang_data) {
