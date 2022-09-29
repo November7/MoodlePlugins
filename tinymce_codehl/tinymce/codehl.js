@@ -45,8 +45,6 @@ var codehlWidth 		= null;
 var codehlWidthUnit 	= null;
 var themeControl		= null;
 var useJavaScriptParser = null;
-//var classPrefix 		= 'codehl_';
-//var classParserJS		= 'parserJS';
 var classLangPrefix		= 'chLang_';
 var classParserPrefix	= 'chParser_';
 
@@ -288,7 +286,6 @@ var codehlDialog =
 					rng.collapse(false);
 				}
 				var htmlContent ="<p>&nbsp;</p>";
-//				htmlContent += "<div class='codehl'><div class='"+classPrefix+languageVal+"' data-parser='"+useJSVal+"' "+" 'data-language='"+languageVal+"' ";
 				htmlContent += "<div class='codehl'><div class='"+classLangPrefix+languageVal+" "+classParserPrefix+useJSVal+"' ";
 				htmlContent += "style='width: "+divWidth+";'>"; 
 				htmlContent += xmlHttp.responseText;
@@ -301,8 +298,6 @@ var codehlDialog =
 			else
 			{
 				mainDiv.className		= classLangPrefix+languageVal+" "+classParserPrefix+useJSVal;
-//				mainDiv.setAttribute('data-parser',useJSVal);
-//				mainDiv.setAttribute('data-language',languageVal);
 				mainDiv.style.width 	= divWidth;
 				mainDiv.innerHTML		= xmlHttp.responseText;
 			}
