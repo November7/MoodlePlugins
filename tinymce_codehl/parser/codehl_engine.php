@@ -52,7 +52,7 @@ class CodeHL
 	var $style = "normal";
 	var $codeHeader = "Sample code";
 	var $timestamps = array();
-	var $ver = "2.0";
+	var $ver = "2.1";
 	var $parserEngine = "PHP";
 
 	function timestamp($name="noname")
