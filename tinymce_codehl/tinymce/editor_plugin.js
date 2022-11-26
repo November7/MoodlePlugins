@@ -34,9 +34,9 @@
 			return {
 				longname : 'Code HL',
 				author : 'Marcin Kowalski',
-				authorurl : 'http://www.zsme.tarnow.pl',
-				infourl : 'http://www.zsme.tarnow.pl',
-				version : "2.0"
+				authorurl : 'https://www.zsme.tarnow.pl',
+				infourl : 'https://www.zsme.tarnow.pl',
+				version : "2.1"
 			};
 		}
 	});
